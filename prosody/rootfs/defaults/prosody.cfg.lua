@@ -162,6 +162,21 @@ network_settings = {
   tcp_backlog = 511;
 }
 
+-- internal muc component, meant to enable pools of jibri and jigasi clients
+Component "{{ .Env.XMPP_INTERNAL_MUC_DOMAIN }}" "muc"
+    modules_enabled = {
+      "ping";
+    }
+    storage = "null"
+    muc_room_cache_size = 1000
+
+VirtualHost "{{ .Env.XMPP_RECORDER_DOMAIN }}"
+	modules_enabled = {
+	  "ping";
+	}
+	authentication = "internal_plain"
+
+	
 component_interface = { "*" }
 
 data_path = "/config/data"
